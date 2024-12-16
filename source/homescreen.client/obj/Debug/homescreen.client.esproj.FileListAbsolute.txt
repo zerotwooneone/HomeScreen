@@ -1,0 +1,2 @@
+C:\Users\squir\source\repos\HomeScreen\source\HomeScreen\homescreen.client\obj\Debug\homescreen.client.esproj.CoreCompileInputs.cache
+C:\Users\squir\source\repos\HomeScreen\source\homescreen.client\obj\Debug\homescreen.client.esproj.CoreCompileInputs.cache

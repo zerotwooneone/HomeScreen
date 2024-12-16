@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\squir\\source\\repos\\HomeScreen\\source\\homescreen.client\\homescreen.client.esproj": {}
+  },
+  "projects": {
+    "C:\\Users\\squir\\source\\repos\\HomeScreen\\source\\homescreen.client\\homescreen.client.esproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\squir\\source\\repos\\HomeScreen\\source\\homescreen.client\\homescreen.client.esproj",
+        "projectName": "homescreen.client",
+        "projectPath": "C:\\Users\\squir\\source\\repos\\HomeScreen\\source\\homescreen.client\\homescreen.client.esproj",
+        "packagesPath": "C:\\Users\\squir\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\squir\\source\\repos\\HomeScreen\\source\\homescreen.client\\obj\\",
+        "projectStyle": "PackageReference",
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "d:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\squir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\squir\\source\\repos\\Feeds\\Computer": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-none": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0-none": {
+          "targetAlias": "net6.0"
+        }
+      }
+    }
+  }
+}
