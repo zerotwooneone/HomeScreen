@@ -14,7 +14,7 @@ public class ScreenHub: Hub<IScreenHubClient>
 
     public override Task OnConnectedAsync()
     {
-        _logger.LogInformation("Connected {ContextConnectionId}", Context.ConnectionId);
+        _logger.LogDebug("Connected {ContextConnectionId}", Context.ConnectionId);
         return base.OnConnectedAsync();
     }
 }
