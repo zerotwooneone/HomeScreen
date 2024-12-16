@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 interface WeatherForecast {
   date: string;
@@ -20,6 +21,28 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getForecasts();
+
+    const connection = new HubConnectionBuilder()
+      .withUrl("/screenHub")
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    async function start() {
+      try {
+        await connection.start();
+        console.log("SignalR Connected.");
+      } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+      }
+    };
+
+    connection.onclose(async () => {
+      await start();
+    });
+
+    // Start the connection.
+    start();
   }
 
   getForecasts() {

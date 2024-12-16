@@ -1,3 +1,5 @@
+using HomeScreen.Server.Screen;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(b =>
+    {
+        b
+            .WithOrigins("http://localhost:62185", "http://127.0.0.1:62185")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -23,8 +38,16 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+if (app.Environment.IsDevelopment())
+{
+    //this must be AFTER UseRouting, but BEFORE UseSignalR
+    app.UseCors();
+}
+
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+app.MapHub<ScreenHub>("/screenHub");
 
 app.Run();
