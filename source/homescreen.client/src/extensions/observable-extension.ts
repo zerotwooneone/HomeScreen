@@ -1,5 +1,5 @@
 ﻿import { Observable } from "rxjs";
-import {ObservableProperty} from "../app/screen/ObservableProperty";
+import {ObservableProperty} from "./ObservableProperty";
 
 export {}; //this file needs to be a module
 

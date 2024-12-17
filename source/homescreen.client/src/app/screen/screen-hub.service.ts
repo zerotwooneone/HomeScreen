@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HubConnectionBuilder} from '@microsoft/signalr';
-import {ObservableProperty} from "./ObservableProperty";
+import {ObservableProperty} from "../../extensions/ObservableProperty";
 
 @Injectable({
   providedIn: 'root'
