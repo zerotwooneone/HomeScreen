@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HubConnectionBuilder} from '@microsoft/signalr';
 import {ObservableProperty} from "../../extensions/ObservableProperty";
 import {ScreenModule} from "./screen.module";
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: ScreenModule
@@ -10,6 +11,10 @@ export class ScreenHubService {
 
   private readonly _connection: signalR.HubConnection;
   private connected: ObservableProperty<boolean> = new ObservableProperty<boolean>(false);
+  private readonly messageSubject: Subject<any>=new Subject();
+  get message$() : Observable<any> {
+    return this.messageSubject;
+  }
   constructor() {
     const defaultBuilder = new HubConnectionBuilder()
       .withAutomaticReconnect()
@@ -53,7 +58,8 @@ export class ScreenHubService {
 
   private registerHandlers() {
     this._connection.on("SendMessage", (message: object) => {
-      console.warn('Received message', message);
+      //console.warn('Received message', message);
+      this.messageSubject.next(message);
     })
   }
 }

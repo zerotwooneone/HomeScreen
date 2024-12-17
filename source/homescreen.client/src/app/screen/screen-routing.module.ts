@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ScreenHomeComponent} from "./screen-home/screen-home.component";
 import {localhostGuard} from "./localhost.guard";
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -13,8 +14,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  declarations:[ScreenHomeComponent],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+  ],
+  exports: [RouterModule],
+  declarations: [ScreenHomeComponent ]
 })
 export class ScreenRoutingModule { }
