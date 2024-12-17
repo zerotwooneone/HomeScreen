@@ -10,7 +10,11 @@ public class ScreenHub: Hub<IScreenHubClient>
     {
         _logger = logger;
     }
-    public async Task SendMessage(object message) => await Clients.All.SendMessage(message);
+
+    public Task Ping(string message)
+    {
+        return Task.CompletedTask;
+    }
 
     public override Task OnConnectedAsync()
     {

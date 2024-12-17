@@ -1,3 +1,4 @@
+using HomeScreen.Server;
 using HomeScreen.Server.Screen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<ScreenService>();
+builder.Services.AddSingleton<ITimeProvider, HomeScreen.Server.Screen.TimeProvider>();
+builder.Services.AddSingleton<IScreenHubFactory>(sp => new ScreenHubFactory(sp));
 
 builder.Services.AddCors(options =>
 {

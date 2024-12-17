@@ -37,5 +37,5 @@ export class AppComponent implements OnInit {
     );
   }
 
-  title = 'homescreen.client';
+  title = 'homescreen';
 }
