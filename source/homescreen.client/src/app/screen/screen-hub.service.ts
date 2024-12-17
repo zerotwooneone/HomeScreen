@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HubConnectionBuilder} from '@microsoft/signalr';
 import {ObservableProperty} from "../../extensions/ObservableProperty";
+import {ScreenModule} from "./screen.module";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: ScreenModule
 })
 export class ScreenHubService {
 
