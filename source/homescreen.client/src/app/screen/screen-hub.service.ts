@@ -12,9 +12,7 @@ export class ScreenHubService {
   private readonly _connection: signalR.HubConnection;
   private connected: ObservableProperty<boolean> = new ObservableProperty<boolean>(false);
   private readonly messageSubject: Subject<any>=new Subject();
-  get message$() : Observable<any> {
-    return this.messageSubject;
-  }
+  readonly message$: Observable<any>;
   constructor() {
     const defaultBuilder = new HubConnectionBuilder()
       .withAutomaticReconnect()
@@ -30,6 +28,7 @@ export class ScreenHubService {
       console.info('reconnected', connectionId);
       this.connected.Value = true;
     });
+    this.message$ = this.messageSubject;
   }
 
   async connect(): Promise<boolean> {
