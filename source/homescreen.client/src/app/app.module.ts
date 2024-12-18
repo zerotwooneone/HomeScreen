@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {ScreenModule} from "./screen/screen.module";
+import {ClientModule} from "./client/client.module";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {ScreenModule} from "./screen/screen.module";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ScreenModule
+    ScreenModule,
+    ClientModule
   ],
   providers: [
     provideAnimationsAsync()
