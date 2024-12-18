@@ -1,2 +1,5 @@
 <p>screen-home works!</p>
 <div style="height: 100px; width: 100px" [style.background-color]="(backgroundColor$ | async)"></div>
+<div style="height: 100px; width: 100px" [class.red]="(backgroundColor$ | async)==='red'" [class.blue]="(backgroundColor$ | async)==='blue'"></div>
+<div style="font-weight: bold; font-size: 18px">{{backgroundColor$|async}}</div>
+<div style="font-weight: bold; font-size: 18px">{{backgroundColor$|async}}</div>

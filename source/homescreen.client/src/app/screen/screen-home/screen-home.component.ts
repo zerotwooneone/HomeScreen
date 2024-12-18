@@ -5,7 +5,7 @@ import {Observable, map } from 'rxjs';
 @Component({
   selector: 'zh-screen-home',
   templateUrl: './screen-home.component.html',
-  styleUrl: './screen-home.component.css'
+  styleUrl: './screen-home.component.scss'
 })
 export class ScreenHomeComponent implements OnInit {
   readonly backgroundColor$: Observable<string>;
