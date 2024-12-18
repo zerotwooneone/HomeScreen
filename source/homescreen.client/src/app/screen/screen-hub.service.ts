@@ -1,6 +1,5 @@
-import {Injectable} from '@angular/core';
+import {Injectable, computed, signal} from '@angular/core';
 import {HubConnectionBuilder} from '@microsoft/signalr';
-import {ObservableProperty} from "../../extensions/ObservableProperty";
 import {ScreenModule} from "./screen.module";
 import { Subject, Observable } from 'rxjs';
 
@@ -10,7 +9,8 @@ import { Subject, Observable } from 'rxjs';
 export class ScreenHubService {
 
   private readonly _connection: signalR.HubConnection;
-  private connected: ObservableProperty<boolean> = new ObservableProperty<boolean>(false);
+  private _connected= signal(false);
+  readonly connected = computed(()=>this._connected());
   private readonly messageSubject: Subject<any>=new Subject();
   readonly message$: Observable<any>;
   constructor() {
@@ -21,20 +21,20 @@ export class ScreenHubService {
     const builder = defaultBuilder.withServerTimeout(30000);
     this._connection = builder.build();
     this._connection.onclose(error => {
-      this.connected.Value = false;
+      this._connected.set(false);
       console.warn(`hub connection closed.`, error);
     });
     this._connection.onreconnected(connectionId => {
       console.info('reconnected', connectionId);
-      this.connected.Value = true;
+      this._connected.set(true);
     });
     this.message$ = this.messageSubject;
   }
 
   async connect(): Promise<boolean> {
-    if (this.connected.Value) {
+    if (this._connected()) {
       console.warn(`already connected`);
-      return this.connected.Value;
+      return this._connected();
     }
     if (!this._connection) {
       return false;
@@ -51,8 +51,8 @@ export class ScreenHubService {
     } catch (exception) {
       console.error("error registering handlers", exception);
     }
-    this.connected.Value = true;
-    return this.connected.Value;
+    this._connected.set(true);
+    return this._connected();
   }
 
   private registerHandlers() {
