@@ -1,10 +1,20 @@
 <p>client-home works!</p>
-<div>
+<div style="display: flex">
   <mat-form-field appearance="outline">
     <mat-label>Image Url</mat-label>
-    <input matInput placeholder="Placeholder">
-    <mat-icon matSuffix>image</mat-icon>
-    <mat-hint>Can be anything that can live in an img tag (png, gif, etc)</mat-hint>
+    <input
+      matInput
+      [(ngModel)]="url">
+    <mat-icon matSuffix>add_link</mat-icon>
+    <mat-hint>(png, gif, etc)</mat-hint>
   </mat-form-field>
-  <button mat-stroked-button>Basic</button>
+  <button
+    mat-stroked-button
+    (click)="sendClick($event)"
+    [disabled]="sendDisabled()">Send</button>
+  <img
+    [src]="imageUrl"
+    (error)="onImgError($event)"
+    (load)="onImgLoad($event)"
+    style="display: none"/>
 </div>
