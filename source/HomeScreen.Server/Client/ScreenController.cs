@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HomeScreen.Server.Screen;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HomeScreen.Server.Client;
 
@@ -7,20 +8,30 @@ namespace HomeScreen.Server.Client;
 public class ScreenController : ControllerBase
 {
     private readonly ILogger<ScreenController> _logger;
+    private readonly IScreenService _screenService;
 
-    public ScreenController(ILogger<ScreenController> logger)
+    public ScreenController(
+        ILogger<ScreenController> logger, 
+        IScreenService screenService)
     {
         _logger = logger;
+        _screenService = screenService;
     }
     [HttpPost]
-    public void SetImage([FromBody] SetImageModel obj)
+    public async Task<ActionResult> SetImage([FromBody] SetImageModel obj)
     {
-        _logger.LogWarning("set image {Url}", obj.Url);
+        if (string.IsNullOrWhiteSpace(obj.Url.Trim()))
+        {
+            return BadRequest();
+        }
+        _logger.LogDebug("set image {Url}", obj.Url);
+        await _screenService.SetImage(obj.Url);
+        return NoContent();
     }
     
     public class SetImageModel
     {
-        public string Url { get; set; }
+        public string Url { get; set; }="";
     }
 }
 

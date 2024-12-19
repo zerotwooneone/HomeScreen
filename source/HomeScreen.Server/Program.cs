@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
-builder.Services.AddHostedService<ScreenService>();
+builder.Services.AddSingleton< IScreenService,ScreenService>();
 builder.Services.AddSingleton<ITimeProvider, HomeScreen.Server.Screen.TimeProvider>();
 
 const string devCors = "dev";
