@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {ScreenHubService} from "./screen/screen-hub.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -19,28 +17,12 @@ interface WeatherForecast {
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient,
-              private readonly activateRoute: ActivatedRoute,
+  constructor(private readonly activateRoute: ActivatedRoute,
               private readonly router: Router) {}
 
   async ngOnInit() {
-    this.getForecasts();
-
     this.activateRoute.queryParamMap
       .pipe(filter(p => !!p.has('screen')))
       .subscribe(() => this.router.navigateByUrl('screen'));
   }
-
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  title = 'homescreen';
 }
