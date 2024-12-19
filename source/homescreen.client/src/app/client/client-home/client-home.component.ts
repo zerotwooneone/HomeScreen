@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Subject, finalize, map, merge, of, take, timeout} from 'rxjs';
+import {ScreenService} from "../screen.service";
 
 @Component({
   selector: 'zh-client-home',
@@ -12,6 +13,7 @@ export class ClientHomeComponent {
   private readonly imgLoadSubject = new Subject<Event>();
   url="";
   sendDisabled = signal(false);
+  constructor(private readonly screenService: ScreenService) {  }
 
   onImgError(event: Event) {
     this.imgErrorSubject.next(event);
@@ -43,7 +45,11 @@ export class ClientHomeComponent {
         finalize(()=>this.sendDisabled.set(false))
     ).subscribe(success=>{
       if(success){
-        this.url="";
+        this.screenService
+          .SetImage(this.url)
+          .subscribe(response=> {
+            this.url="";
+          });
       }
       this.imageUrl="";
     });

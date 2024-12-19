@@ -14,15 +14,18 @@ builder.Services.AddHostedService<ScreenService>();
 builder.Services.AddSingleton<ITimeProvider, HomeScreen.Server.Screen.TimeProvider>();
 builder.Services.AddSingleton<IScreenHubFactory>(sp => new ScreenHubFactory(sp));
 
+const string devCors = "dev";
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(b =>
+    options.AddPolicy(devCors,b =>
     {
         b
             .WithOrigins("http://localhost:62185", "http://127.0.0.1:62185")
-            .AllowAnyHeader()
+            //.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowCredentials();
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .WithExposedHeaders("Content-Type", "X-Custom-Header");
     });
 });
 
@@ -30,6 +33,8 @@ var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.UseRouting();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -45,7 +50,7 @@ app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     //this must be AFTER UseRouting, but BEFORE UseSignalR
-    app.UseCors();
+    app.UseCors(devCors);
 }
 
 app.MapControllers();
