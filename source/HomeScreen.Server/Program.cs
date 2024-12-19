@@ -12,7 +12,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<ScreenService>();
 builder.Services.AddSingleton<ITimeProvider, HomeScreen.Server.Screen.TimeProvider>();
-builder.Services.AddSingleton<IScreenHubFactory>(sp => new ScreenHubFactory(sp));
 
 const string devCors = "dev";
 builder.Services.AddCors(options =>
