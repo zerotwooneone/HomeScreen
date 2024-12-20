@@ -1,6 +1,6 @@
 <h1 >Home Screen</h1>
-<div style="display: flex">
-  <mat-form-field appearance="outline">
+<div style="display: flex;">
+  <mat-form-field appearance="outline" style="min-width: 400px; width: 50%;max-width: 75%">
     <mat-label>Image Url</mat-label>
     <input
       matInput
@@ -11,7 +11,8 @@
   <button
     mat-stroked-button
     (click)="sendClick($event)"
-    [disabled]="sendDisabled()">Send</button>
+    [disabled]="sendDisabled()"
+  style="align-self: center">Send</button>
   <img
     [src]="imageUrl"
     (error)="onImgError($event)"
