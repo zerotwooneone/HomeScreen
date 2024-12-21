@@ -1,21 +1,25 @@
 <h1 >Home Screen</h1>
-<div style="display: flex;">
-  <mat-form-field appearance="outline" style="min-width: 400px; width: 50%;max-width: 75%">
-    <mat-label>Image Url</mat-label>
-    <input
-      matInput
-      [(ngModel)]="url">
-    <mat-icon matSuffix>add_link</mat-icon>
-    <mat-hint>(png, gif, etc)</mat-hint>
-  </mat-form-field>
-  <button
-    mat-stroked-button
-    (click)="sendClick($event)"
-    [disabled]="sendDisabled()"
-  style="align-self: center">Send</button>
-  <img
-    [src]="imageUrl"
-    (error)="onImgError($event)"
-    (load)="onImgLoad($event)"
-    style="display: none"/>
-</div>
+<form [formGroup]="imageForm">
+  <div formArrayName="urls">
+    <div style="display: flex;" *ngFor="let url of urls.controls; let i = index">
+      <mat-form-field appearance="outline" style="min-width: 400px; width: 50%;max-width: 75%">
+        <mat-label>Image Url</mat-label>
+        <input
+          matInput
+          [formControlName]="i"
+          placeholder="https://example.com/image.(png, gif, webp, jpg)">
+        <mat-icon matSuffix>add_link</mat-icon>
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        (click)="sendClick($event)"
+        [disabled]="sendDisabled()"
+      style="align-self: center">Send</button>
+      <img
+        [src]="imageUrl"
+        (error)="onImgError($event)"
+        (load)="onImgLoad($event)"
+        style="max-height: 100%"/>
+    </div>
+  </div>
+</form>

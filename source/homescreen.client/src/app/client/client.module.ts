@@ -7,7 +7,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {ScreenService} from "./screen.service";
 import { HttpClientModule } from '@angular/common/http';
 
@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
   ],
   providers:[
