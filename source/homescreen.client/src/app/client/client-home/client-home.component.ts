@@ -20,8 +20,35 @@ export class ClientHomeComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly screenService: ScreenService) {
+    const initialUrl = this.formBuilder.control('');
+    initialUrl.valueChanges.subscribe(value=>{
+      if(!value?.trim()){
+        return;
+      }
+      this.imageUrl ="";
+      merge(
+        this.imgErrorSubject.pipe(
+          take(1),
+          map(()=>false)),
+        this.imgLoadSubject.pipe(
+          take(1),
+          map(()=>true))
+      ).pipe(
+        take(1),
+        timeout({
+          first: 5000,
+          with: ()=>of(false)
+        })
+      ).subscribe(success=>{
+        //todo:handle success and failure
+      });
+
+      this.imageUrl = value;
+    });
     this.imageForm = formBuilder.group({
-      urls: this.formBuilder.array([this.formBuilder.control('')])
+      urls: this.formBuilder.array([
+        initialUrl
+      ])
     });
   }
 
@@ -35,36 +62,15 @@ export class ClientHomeComponent {
 
   sendClick(event: MouseEvent) {
     const url = this.urls.at(0)?.value.trim();
-    if(!url.trim()){
+    if(!this.imageForm.valid || !url){
       return;
     }
-    this.imageUrl ="";
     this.sendDisabled.set(true);
-    merge(
-        this.imgErrorSubject.pipe(
-          take(1),
-          map(()=>false)),
-        this.imgLoadSubject.pipe(
-          take(1),
-          map(()=>true))
-      ).pipe(
-        take(1),
-        timeout({
-          first: 5000,
-          with: ()=>of(false)
-        }),
+    this.screenService
+      .SetImage(url)
+      .pipe(
         finalize(()=>this.sendDisabled.set(false))
-    ).subscribe(success=>{
-      if(success){
-        this.screenService
-          .SetImage(url)
-          .subscribe(response=> {
-            this.urls.at(0).setValue("");
-          });
-      }
-      this.imageUrl="";
-    });
-
-    this.imageUrl = url;
+      )
+      .subscribe();
   }
 }
