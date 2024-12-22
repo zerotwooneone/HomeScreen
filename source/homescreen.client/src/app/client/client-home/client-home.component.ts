@@ -18,10 +18,9 @@ export class ClientHomeComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly screenService: ScreenService) {
-    const initialUrl = this.formBuilder.control('');
     this.imageForm = formBuilder.group({
       urls: this.formBuilder.array([
-        initialUrl
+        this.controlFactory()
       ])
     });
   }
@@ -51,8 +50,11 @@ export class ClientHomeComponent {
     this.urls.removeAt(controlIndex);
   }
 
+  controlFactory(){
+    return this.formBuilder.control('');
+  }
   addClick($event: MouseEvent) {
-    this.urls.push(this.formBuilder.control(''));
+    this.urls.push(this.controlFactory());
     this.canDelete.set(this.urls.length > 1);
   }
 }
