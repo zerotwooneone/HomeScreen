@@ -1,0 +1,16 @@
+<mat-form-field
+  appearance="outline"
+  style="min-width: 75%;">
+  <mat-label>Image Url</mat-label>
+  <input
+    matInput
+    [formControl]="control()"
+    placeholder="https://example.com/image.(png, gif, webp, jpg)">
+  <mat-icon matSuffix>add_link</mat-icon>
+</mat-form-field>
+<img
+  [src]="imageUrl"
+  (error)="onImgError($event)"
+  (load)="onImgLoad($event)"
+  (abort)="onImgAbort($event)"
+  style="padding: 1em; border: 2px solid darkgrey; object-fit: contain; align-self: center"/>

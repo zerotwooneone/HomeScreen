@@ -1,25 +1,16 @@
 <h1 >Home Screen</h1>
 <form [formGroup]="imageForm">
   <div formArrayName="urls">
-    <div style="display: flex;" *ngFor="let url of urls.controls; let i = index">
-      <mat-form-field appearance="outline" style="min-width: 400px; width: 50%;max-width: 75%">
-        <mat-label>Image Url</mat-label>
-        <input
-          matInput
-          [formControlName]="i"
-          placeholder="https://example.com/image.(png, gif, webp, jpg)">
-        <mat-icon matSuffix>add_link</mat-icon>
-      </mat-form-field>
-      <button
-        mat-stroked-button
-        (click)="sendClick($event)"
-        [disabled]="sendDisabled()"
-      style="align-self: center">Send</button>
-      <img
-        [src]="imageUrl"
-        (error)="onImgError($event)"
-        (load)="onImgLoad($event)"
-        style="padding: 1em; border: 2px solid darkgrey; object-fit: contain"/>
+    <div style="display: flex;" *ngFor="let imageControl of urls.controls; let i = index">
+      <zh-image-input [control]="castFormControl(imageControl)"></zh-image-input>
     </div>
+    <button
+      mat-stroked-button
+      (click)="sendClick($event)"
+      [disabled]="sendDisabled()"
+      style="align-self: center">Send</button>
+  </div>
+  <div>
+
   </div>
 </form>
