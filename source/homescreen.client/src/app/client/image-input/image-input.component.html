@@ -15,6 +15,6 @@
     (error)="onImgError($event)"
     (load)="onImgLoad($event)"
     (abort)="onImgAbort($event)"
-    style=" object-fit: contain;" [style.display]="imgVisible() ? 'block' : 'none'"/>
+    style=" object-fit: contain; max-height: 100%" [style.display]="imgVisible() ? 'block' : 'none'"/>
 </div>
 
