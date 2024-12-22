@@ -18,5 +18,11 @@
       (click)="sendClick($event)"
       [disabled]="sendDisabled()"
       style="align-self: center">Send</button>
+    <button
+      mat-stroked-button
+      (click)="addClick($event)"
+      style="align-self: center">
+      <mat-icon matSuffix>add_photo_alternate</mat-icon>
+    </button>
   </div>
 </form>

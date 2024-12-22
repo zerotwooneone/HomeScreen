@@ -11,7 +11,7 @@ import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@
 export class ClientHomeComponent {
   readonly sendDisabled = signal(false);
   imageForm: FormGroup;
-  canDelete = computed<boolean>(()=>this.urls.length > 1);
+  canDelete = signal<boolean>(false);
   get urls() {
     return this.imageForm.get('urls') as FormArray;
   }
@@ -44,9 +44,15 @@ export class ClientHomeComponent {
   }
 
   deleteClick(controlIndex:number) {
+    this.canDelete.set(this.urls.length > 1);
     if(this.urls.length <=1){
       return;
     }
     this.urls.removeAt(controlIndex);
+  }
+
+  addClick($event: MouseEvent) {
+    this.urls.push(this.formBuilder.control(''));
+    this.canDelete.set(this.urls.length > 1);
   }
 }
