@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import {Component, input, OnInit, signal} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, map, merge, of, Subject, take, timeout } from 'rxjs';
 
@@ -14,6 +14,7 @@ export class ImageInputComponent implements OnInit {
    private readonly imgErrorSubject = new Subject<Event>();
    private readonly imgLoadSubject = new Subject<Event>();
    private readonly imgAbortSubject = new Subject<Event>();
+  imgVisible = signal<boolean>(false);
 
   constructor() {
   }
@@ -28,6 +29,7 @@ export class ImageInputComponent implements OnInit {
           return;
         }
         this.imageUrl ="";
+        this.imgVisible.set(false);
         merge(
           this.imgErrorSubject.pipe(
             take(1),
@@ -45,7 +47,7 @@ export class ImageInputComponent implements OnInit {
             with: ()=>of(false)
           })
         ).subscribe(success=>{
-          //todo:handle success and failure
+          this.imgVisible.set(success);
         });
         this.imageUrl = value;
     });

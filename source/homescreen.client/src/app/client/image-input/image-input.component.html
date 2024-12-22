@@ -8,9 +8,13 @@
     placeholder="https://example.com/image.(png, gif, webp, jpg)">
   <mat-icon matSuffix>add_link</mat-icon>
 </mat-form-field>
-<img
-  [src]="imageUrl"
-  (error)="onImgError($event)"
-  (load)="onImgLoad($event)"
-  (abort)="onImgAbort($event)"
-  style="padding: 1em; border: 2px solid darkgrey; object-fit: contain; align-self: center"/>
+<div
+  style="padding: 1em; border: 2px solid darkgrey; align-self:stretch" >
+  <img
+    [src]="imageUrl"
+    (error)="onImgError($event)"
+    (load)="onImgLoad($event)"
+    (abort)="onImgAbort($event)"
+    style=" object-fit: contain;" [style.display]="imgVisible() ? 'block' : 'none'"/>
+</div>
+
