@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
 import { finalize} from 'rxjs';
 import {ScreenService} from "../screen.service";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -11,6 +11,7 @@ import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@
 export class ClientHomeComponent {
   readonly sendDisabled = signal(false);
   imageForm: FormGroup;
+  canDelete = computed<boolean>(()=>this.urls.length > 1);
   get urls() {
     return this.imageForm.get('urls') as FormArray;
   }
@@ -40,5 +41,12 @@ export class ClientHomeComponent {
 
   castFormControl(imageControl: AbstractControl) {
     return imageControl as FormControl;
+  }
+
+  deleteClick(controlIndex:number) {
+    if(this.urls.length <=1){
+      return;
+    }
+    this.urls.removeAt(controlIndex);
   }
 }
