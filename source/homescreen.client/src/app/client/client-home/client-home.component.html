@@ -1,6 +1,6 @@
 <h1 >Home Screen</h1>
 <form [formGroup]="imageForm">
-  <div formArrayName="urls">
+  <div >
     <div style="display: flex;" *ngFor="let imageControl of urls.controls; let i = index">
       <zh-image-input
         [control]="castFormControl(imageControl)"
