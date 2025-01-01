@@ -49,15 +49,9 @@ export class ImageInputComponent implements OnInit {
         this.imgVisible.set(false);
         let imageLoadSuccess = merge(
           this.imgErrorSubject.pipe(
-            map(()=> {
-              console.warn('image failed to load');
-              return false;
-            })),
+            map(()=> false)),
           this.imgLoadSubject.pipe(
-            map(()=> {
-              console.info('image loaded');
-              return true;
-            })),
+            map(()=> true)),
           this.imgAbortSubject.pipe(
             map(()=>false))
         ).pipe(
