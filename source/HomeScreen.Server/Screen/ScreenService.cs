@@ -14,8 +14,18 @@ public class ScreenService: IScreenService
         _logger = logger;
         _screenHubContext = screenHubContext;
     }
-    public async Task SetImage(string url,CancellationToken cancellationToken)
+    public async Task SetImageUrl(string url,CancellationToken cancellationToken)
     {
         await _screenHubContext.Clients.All.SendAsync("SendMessage",url,cancellationToken);
+    }
+
+    public async Task SetImageData(string dataUrl, CancellationToken cancellationToken = default)
+    {
+        await _screenHubContext.Clients.All.SendAsync("ImageUpdate", new ImageUpdateModel { DataUrl = dataUrl }, cancellationToken);
+    }
+    
+    private class ImageUpdateModel
+    {
+        public string DataUrl { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ScreenHubService} from "../screen-hub.service";
-import {Observable, map, shareReplay } from 'rxjs';
+import {Observable, filter, map, merge, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'zh-screen-home',
@@ -8,12 +8,17 @@ import {Observable, map, shareReplay } from 'rxjs';
   styleUrl: './screen-home.component.scss'
 })
 export class ScreenHomeComponent implements OnInit {
-  imageUrl$: Observable<string>;
+  imageSource$: Observable<string>;
   constructor(private readonly _screenHub: ScreenHubService,) {
-    this.imageUrl$ = _screenHub.message$;
+    this.imageSource$ = merge(
+      _screenHub.message$,
+      _screenHub.imageUpdate$.pipe(
+        map(imageUpdate => imageUpdate.dataUrl))
+    );
   }
 
   async ngOnInit() {
     await this._screenHub.connect();
+    console.debug('screen hub connected');
   }
 }

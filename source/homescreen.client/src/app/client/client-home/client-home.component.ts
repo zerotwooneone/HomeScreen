@@ -12,6 +12,7 @@ export class ClientHomeComponent {
   readonly sendDisabled = signal(false);
   imageForm: FormGroup;
   canDelete = signal<boolean>(false);
+  imageSource= signal('');
   get urls() {
     return this.imageForm.get('urls') as FormArray;
   }
@@ -25,13 +26,13 @@ export class ClientHomeComponent {
     });
   }
   sendClick(event: MouseEvent) {
-    const url = this.urls.at(0)?.value.trim();
-    if(!this.imageForm.valid || !url){
+    const imageSource = this.imageSource();
+    if(!this.imageForm.valid || !imageSource){
       return;
     }
     this.sendDisabled.set(true);
     this.screenService
-      .SetImage(url)
+      .SetImageData(imageSource)
       .pipe(
         finalize(()=>this.sendDisabled.set(false))
       )

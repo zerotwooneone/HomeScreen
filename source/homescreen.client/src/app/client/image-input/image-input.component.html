@@ -11,7 +11,7 @@
 <div
   style="padding: 1em; border: 2px solid darkgrey; align-self:stretch" >
   <img
-    [src]="imageUrl"
+    [src]="imageSource()"
     (error)="onImgError($event)"
     (load)="onImgLoad($event)"
     (abort)="onImgAbort($event)"

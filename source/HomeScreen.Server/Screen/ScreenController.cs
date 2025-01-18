@@ -1,7 +1,6 @@
-﻿using HomeScreen.Server.Screen;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HomeScreen.Server.Client;
+namespace HomeScreen.Server.Screen;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -20,18 +19,25 @@ public class ScreenController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> SetImage([FromBody] SetImageModel obj)
     {
-        if (string.IsNullOrWhiteSpace(obj.Url.Trim()))
+        if (string.IsNullOrWhiteSpace(obj.Url.Trim()) && string.IsNullOrWhiteSpace(obj.DataUrl.Trim()))
         {
             return BadRequest();
         }
-        _logger.LogDebug("set image {Url}", obj.Url);
-        await _screenService.SetImage(obj.Url);
+        _logger.LogDebug("set image {obj}", obj);
+        if (!string.IsNullOrWhiteSpace(obj.Url))
+        {
+            await _screenService.SetImageUrl(obj.Url);
+        }else if (!string.IsNullOrWhiteSpace(obj.DataUrl))
+        {
+            await _screenService.SetImageData(obj.DataUrl);
+        }
+        
         return NoContent();
     }
-    
     public class SetImageModel
     {
         public string Url { get; set; }="";
+        public string DataUrl { get; set; }="";
     }
 }
 

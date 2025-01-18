@@ -12,7 +12,9 @@ export class ScreenHubService {
   private _connected= signal(false);
   readonly connected = computed(()=>this._connected());
   private readonly messageSubject: Subject<string>=new Subject();
-  readonly message$: Observable<string>;
+  readonly message$: Observable<string>= this.messageSubject;
+  private readonly imageUpdateSubject: Subject<ImageUpdateRequest>=new Subject();
+  readonly imageUpdate$: Observable<ImageUpdateRequest>= this.imageUpdateSubject;
   constructor() {
     const defaultBuilder = new HubConnectionBuilder()
       .withAutomaticReconnect()
@@ -28,7 +30,6 @@ export class ScreenHubService {
       console.info('reconnected', connectionId);
       this._connected.set(true);
     });
-    this.message$ = this.messageSubject;
   }
 
   async connect(): Promise<boolean> {
@@ -57,8 +58,19 @@ export class ScreenHubService {
 
   private registerHandlers() {
     this._connection.on("SendMessage", (message: string) => {
-      //console.warn('Received message', message);
       this.messageSubject.next(message);
-    })
+    });
+    this._connection.on("ImageUpdate", (message: ImageUpdateModel) => {
+      if(!message?.dataUrl) return;
+      this.imageUpdateSubject.next({dataUrl:message.dataUrl});
+    });
   }
+}
+
+class ImageUpdateModel{
+  dataUrl?:string;
+}
+
+export type ImageUpdateRequest ={
+  dataUrl:string;
 }

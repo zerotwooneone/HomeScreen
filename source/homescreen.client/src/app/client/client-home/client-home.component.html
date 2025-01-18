@@ -4,6 +4,7 @@
     <div style="display: flex;" *ngFor="let imageControl of urls.controls; let i = index">
       <zh-image-input
         [control]="castFormControl(imageControl)"
+        [(imageSource)]="imageSource"
         style="height: 78px;"></zh-image-input>
       <button
         mat-stroked-button

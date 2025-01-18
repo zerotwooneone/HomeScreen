@@ -2,5 +2,6 @@
 
 public interface IScreenService
 {
-    Task SetImage(string url, CancellationToken cancellationToken=default);
+    Task SetImageUrl(string url, CancellationToken cancellationToken=default);
+    Task SetImageData(string dataUrl, CancellationToken cancellationToken=default); 
 }
