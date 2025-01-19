@@ -41,14 +41,16 @@ export class ImageInputComponent implements OnInit {
         if(!value?.trim()){
           return;
         }
+        this.imageSource.set('');
+        this.imgVisible.set(false);
         const sanitizedValue = value.trim();
+        const dataUrl = await this.getBase64Image(sanitizedValue);
 
         //todo: fix issue with pasting image url
         const timeoutMs = this.timeoutMs()<0
           ? 1
           : this.timeoutMs();
 
-        this.imgVisible.set(false);
         let imageLoadSuccess = merge(
           this.imgErrorSubject.pipe(
             map(()=> {
@@ -75,7 +77,8 @@ export class ImageInputComponent implements OnInit {
         imageLoadSuccess.subscribe(success=>{
           this.imgVisible.set(success);
         });
-        this.imageSource.set(await this.getBase64Image(sanitizedValue));
+
+        this.imageSource.set(dataUrl);
     });
   }
 

@@ -10,11 +10,11 @@ import {Observable, filter, map, merge, shareReplay } from 'rxjs';
 export class ScreenHomeComponent implements OnInit {
   imageSource$: Observable<string>;
   constructor(private readonly _screenHub: ScreenHubService,) {
-    this.imageSource$ = merge(
-      _screenHub.message$,
-      _screenHub.imageUpdate$.pipe(
-        map(imageUpdate => imageUpdate.dataUrl))
-    );
+    this.imageSource$ = _screenHub.imageUpdate$.pipe(
+      filter(imageUpdate => imageUpdate.type === 'imageSource'),
+      map(imageUpdate => {
+        return imageUpdate.source;
+      }));
   }
 
   async ngOnInit() {

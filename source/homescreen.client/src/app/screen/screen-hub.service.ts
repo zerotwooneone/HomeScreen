@@ -11,8 +11,6 @@ export class ScreenHubService {
   private readonly _connection: signalR.HubConnection;
   private _connected= signal(false);
   readonly connected = computed(()=>this._connected());
-  private readonly messageSubject: Subject<string>=new Subject();
-  readonly message$: Observable<string>= this.messageSubject;
   private readonly imageUpdateSubject: Subject<ImageUpdateRequest>=new Subject();
   readonly imageUpdate$: Observable<ImageUpdateRequest>= this.imageUpdateSubject;
   constructor() {
@@ -57,20 +55,21 @@ export class ScreenHubService {
   }
 
   private registerHandlers() {
-    this._connection.on("SendMessage", (message: string) => {
-      this.messageSubject.next(message);
-    });
     this._connection.on("ImageUpdate", (message: ImageUpdateModel) => {
-      if(!message?.dataUrl) return;
-      this.imageUpdateSubject.next({dataUrl:message.dataUrl});
+      if(!message?.dataUrl && !message?.url) return;
+      if(message?.dataUrl){
+        this.imageUpdateSubject.next({ type: 'imageSource', source:message.dataUrl});
+      } else if(message?.url) {
+        this.imageUpdateSubject.next({ type: 'imageSource', source: message.url});
+      }
     });
   }
 }
 
 class ImageUpdateModel{
   dataUrl?:string;
+  url?:string;
 }
 
-export type ImageUpdateRequest ={
-  dataUrl:string;
-}
+export type ImageUpdateRequest =
+  { type: 'imageSource', source:string };
