@@ -104,7 +104,14 @@ export class ImageInputComponent implements OnInit {
           reject(error);
         }
       };
+      img.onabort = () => {
+        reject(new Error('Image load aborted'));
+      };
+      img.onerror = () => {
+        reject(new Error('Image load failed'));
+      };
     });
+
     img.src = imageUrl;
 
     return result;
