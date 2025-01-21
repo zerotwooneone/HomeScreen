@@ -1,5 +1,5 @@
 import {Component, computed, signal} from '@angular/core';
-import { finalize} from 'rxjs';
+import { finalize, firstValueFrom} from 'rxjs';
 import {ScreenService} from "../screen.service";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
@@ -25,18 +25,23 @@ export class ClientHomeComponent {
       ])
     });
   }
-  sendClick(event: MouseEvent) {
+
+  async sendClick(event: MouseEvent) {
     const imageSource = this.imageSource();
     if(!this.imageForm.valid || !imageSource){
       return;
     }
     this.sendDisabled.set(true);
-    this.screenService
+    await firstValueFrom(this.screenService
       .SetImageData(imageSource)
       .pipe(
         finalize(()=>this.sendDisabled.set(false))
-      )
-      .subscribe();
+      ));
+    while (this.urls.length>1){
+      this.urls.removeAt(0);
+    }
+    this.urls.at(0).setValue('');
+    this.urls.at(0).markAsUntouched();
   }
 
   castFormControl(imageControl: AbstractControl) {
