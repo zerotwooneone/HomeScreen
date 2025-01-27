@@ -19,14 +19,14 @@ public class ScreenService: IScreenService
         await _screenHubContext.Clients.All.SendAsync("ImageUpdate", new ImageUpdateModel { Url = url }, cancellationToken);
     }
 
-    public async Task SetImageData(string dataUrl, CancellationToken cancellationToken = default)
+    public async Task SetSlideshow(string[] urls, CancellationToken cancellationToken=default)
     {
-        await _screenHubContext.Clients.All.SendAsync("ImageUpdate", new ImageUpdateModel { DataUrl = dataUrl }, cancellationToken);
+        await _screenHubContext.Clients.All.SendAsync("ImageUpdate", new ImageUpdateModel { Slideshow = urls }, cancellationToken);
     }
     
     private class ImageUpdateModel
     {
-        public string? DataUrl { get; set; }
+        public string[]? Slideshow { get; set; }
         public string? Url { get; set; }
     }
 }

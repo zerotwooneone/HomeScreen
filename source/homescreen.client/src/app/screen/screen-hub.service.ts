@@ -56,9 +56,9 @@ export class ScreenHubService {
 
   private registerHandlers() {
     this._connection.on("ImageUpdate", (message: ImageUpdateModel) => {
-      if(!message?.dataUrl && !message?.url) return;
-      if(message?.dataUrl){
-        this.imageUpdateSubject.next({ type: 'imageSource', source:message.dataUrl});
+      if(!message?.slideshow && !message?.url) return;
+      if(message?.slideshow?.length) {
+        this.imageUpdateSubject.next({ type: 'slideshow', urls: message.slideshow});
       } else if(message?.url) {
         this.imageUpdateSubject.next({ type: 'imageSource', source: message.url});
       }
@@ -67,9 +67,14 @@ export class ScreenHubService {
 }
 
 class ImageUpdateModel{
-  dataUrl?:string;
+  slideshow?:string[];
   url?:string;
 }
 
 export type ImageUpdateRequest =
-  { type: 'imageSource', source:string };
+  ImageSourceRequest |
+  SlideshowRequest;
+
+export type ImageSourceRequest = { type: 'imageSource', source:string };
+
+export type SlideshowRequest = { type: 'slideshow', urls:string[] };

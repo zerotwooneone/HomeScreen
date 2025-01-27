@@ -17,27 +17,41 @@ public class ScreenController : ControllerBase
         _screenService = screenService;
     }
     [HttpPost]
-    public async Task<ActionResult> SetImage([FromBody] SetImageModel obj)
+    public async Task<ActionResult> SetImage([FromBody] SetImageModel? obj)
     {
-        if (string.IsNullOrWhiteSpace(obj.Url.Trim()) && string.IsNullOrWhiteSpace(obj.DataUrl.Trim()))
+        if (obj is null || obj.SlideShow is null )
         {
-            return BadRequest();
+            return BadRequest("slideShow is required");
         }
+
+        const int arbitraryMax=1000;
+        if (obj.SlideShow.Length>arbitraryMax || obj.SlideShow.Any(x => x.Length > arbitraryMax))
+        {
+            return BadRequest("invalid slideshow");
+        }
+        string[] urls = obj.SlideShow
+            .Select(x => x.Trim())
+            .Where(u => !string.IsNullOrWhiteSpace(u)).ToArray();
+        if(urls.Length == 0)
+        {
+            return NoContent();
+        }
+        
         _logger.LogDebug("set image {obj}", obj);
-        if (!string.IsNullOrWhiteSpace(obj.Url))
+        if (urls.Length == 1)
         {
-            await _screenService.SetImageUrl(obj.Url);
-        }else if (!string.IsNullOrWhiteSpace(obj.DataUrl))
+            await _screenService.SetImageUrl(urls[0]);
+        }
+        else
         {
-            await _screenService.SetImageData(obj.DataUrl);
+            await _screenService.SetSlideshow(urls);
         }
         
         return NoContent();
     }
     public class SetImageModel
     {
-        public string Url { get; set; }="";
-        public string DataUrl { get; set; }="";
+        public string[]? SlideShow { get; set; }
     }
 }
 

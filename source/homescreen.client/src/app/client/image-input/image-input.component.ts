@@ -1,7 +1,6 @@
 import {Component, input, model, OnInit, signal} from '@angular/core';
 import {AbstractControl, FormControl} from '@angular/forms';
-import {BehaviorSubject, catchError, debounceTime, first,
-  firstValueFrom, from, map, merge, Observable, of, shareReplay, Subject, switchMap, take, takeUntil, tap, timeout } from 'rxjs';
+import {firstValueFrom, map, shareReplay, Subject, take } from 'rxjs';
 
 @Component({
   selector: 'zh-image-input',
