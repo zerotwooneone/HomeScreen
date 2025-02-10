@@ -9,27 +9,21 @@ import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import {ScreenService} from "./screen.service";
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ImageInputComponent } from './image-input/image-input.component';
 
 
-@NgModule({
-  declarations: [
-    ClientHomeComponent,
-    ImageInputComponent
-  ],
-  imports: [
-    CommonModule,
-    ClientRoutingModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
-  providers:[
-    ScreenService
-  ]
-})
+@NgModule({ declarations: [
+        ClientHomeComponent,
+        ImageInputComponent
+    ], imports: [CommonModule,
+        ClientRoutingModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        ReactiveFormsModule], providers: [
+        ScreenService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class ClientModule { }
