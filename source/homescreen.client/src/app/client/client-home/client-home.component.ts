@@ -4,9 +4,10 @@ import {ScreenService} from "../screen.service";
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'zh-client-home',
-  templateUrl: './client-home.component.html',
-  styleUrl: './client-home.component.scss'
+    selector: 'zh-client-home',
+    templateUrl: './client-home.component.html',
+    styleUrl: './client-home.component.scss',
+    standalone: false
 })
 export class ClientHomeComponent {
   readonly sendDisabled = signal(false);

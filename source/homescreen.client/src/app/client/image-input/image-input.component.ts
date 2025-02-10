@@ -3,9 +3,10 @@ import {AbstractControl, FormControl} from '@angular/forms';
 import {firstValueFrom, map, shareReplay, Subject, take } from 'rxjs';
 
 @Component({
-  selector: 'zh-image-input',
-  templateUrl: './image-input.component.html',
-  styleUrl: './image-input.component.scss'
+    selector: 'zh-image-input',
+    templateUrl: './image-input.component.html',
+    styleUrl: './image-input.component.scss',
+    standalone: false
 })
 export class ImageInputComponent implements OnInit {
   control= input.required<FormControl>();

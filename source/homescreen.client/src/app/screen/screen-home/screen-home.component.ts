@@ -3,9 +3,10 @@ import {ImageSourceRequest, ScreenHubService, SlideshowRequest} from "../screen-
 import {Observable, filter, map, merge, shareReplay } from 'rxjs';
 
 @Component({
-  selector: 'zh-screen-home',
-  templateUrl: './screen-home.component.html',
-  styleUrl: './screen-home.component.scss'
+    selector: 'zh-screen-home',
+    templateUrl: './screen-home.component.html',
+    styleUrl: './screen-home.component.scss',
+    standalone: false
 })
 export class ScreenHomeComponent implements OnInit {
   imageSource$: Observable<string>;
