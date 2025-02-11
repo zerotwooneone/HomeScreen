@@ -8,13 +8,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {ScreenModule} from "./screen/screen.module";
 import {ClientModule} from "./client/client.module";
 
-@NgModule({ declarations: [
+@NgModule({
+  declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+  bootstrap: [AppComponent],
+  imports: [BrowserModule,
         AppRoutingModule,
         ScreenModule,
-        ClientModule], providers: [
+        ClientModule],
+  providers: [
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi())
     ] })
