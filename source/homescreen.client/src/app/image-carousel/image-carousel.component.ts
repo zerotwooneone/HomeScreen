@@ -1,4 +1,4 @@
-﻿import { Component, Input, signal, effect, ElementRef, ViewChild } from '@angular/core';
+﻿import { Component, Input, signal, effect } from '@angular/core';
 import { imageCarouselAnimations } from './image-carousel.animations';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 
