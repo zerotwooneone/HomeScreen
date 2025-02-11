@@ -2,3 +2,12 @@
   <img
     [src]="(imageSource$ | async)"/>
 </div>
+<div>
+  <zh-image-carousel
+    [imageUrls]="imageUrls"
+    [next]="nextCarousel"
+    [previous]="previousCarousel"
+  ></zh-image-carousel>
+  <button (click)="triggerPrevious()">Previous Carousel</button>
+  <button (click)="triggerNext()">Next Carousel</button>
+</div>

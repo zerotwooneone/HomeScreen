@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ImageSourceRequest, ScreenHubService, SlideshowRequest} from "../screen-hub.service";
-import {Observable, filter, map, merge, shareReplay } from 'rxjs';
+import {Observable, map } from 'rxjs';
 
 @Component({
-    selector: 'zh-screen-home',
-    templateUrl: './screen-home.component.html',
-    styleUrl: './screen-home.component.scss',
-    standalone: false
+  selector: 'zh-screen-home',
+  templateUrl: './screen-home.component.html',
+  styleUrl: './screen-home.component.scss',
+  standalone: false
 })
 export class ScreenHomeComponent implements OnInit {
   imageSource$: Observable<string>;
@@ -28,5 +28,23 @@ export class ScreenHomeComponent implements OnInit {
   async ngOnInit() {
     await this._screenHub.connect();
     console.debug('screen hub connected');
+  }
+
+  imageUrls = [
+    'https://picsum.photos/id/1/600/400',
+    'https://picsum.photos/id/2/600/400',
+    'https://picsum.photos/id/3/600/400',
+    'https://picsum.photos/id/4/600/400'
+  ];
+
+  nextCarousel = signal<object | null>(null);
+  previousCarousel = signal<object | null>(null);
+
+  triggerNext() {
+    this.nextCarousel.set({});
+  }
+
+  triggerPrevious() {
+    this.previousCarousel.set({});
   }
 }

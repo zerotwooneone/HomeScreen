@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {ScreenHomeComponent} from "./screen-home/screen-home.component";
 import {localhostGuard} from "./localhost.guard";
 import { CommonModule } from '@angular/common';
+import {ImageCarouselComponent} from "../image-carousel/image-carousel.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
+    ImageCarouselComponent
   ],
   exports: [RouterModule],
   declarations: [ScreenHomeComponent ]

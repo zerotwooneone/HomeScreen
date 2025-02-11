@@ -1,0 +1,18 @@
+﻿<div class="carousel-container">
+  <div class="image-wrapper"
+       [@carouselAnimation]="currentIndex()"
+       (@carouselAnimation.start)="onAnimationStart()"
+       (@carouselAnimation.done)="onAnimationDone()">
+    <img
+      [ngSrc]="currentImageUrl()"
+      priority="true"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
+      alt="Carousel Image"
+      fill/>
+  </div>
+  <div class="controls">
+    <button (click)="previousImage()">Previous</button>
+    <button (click)="nextImage()">Next</button>
+  </div>
+</div>
