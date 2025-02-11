@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientHomeComponent } from './client-home/client-home.component';
@@ -13,16 +13,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { ImageInputComponent } from './image-input/image-input.component';
 
 
-@NgModule({ declarations: [
+@NgModule({
+  declarations: [
         ClientHomeComponent,
         ImageInputComponent
-    ], imports: [CommonModule,
+    ],
+  imports: [
+        CommonModule,
         ClientRoutingModule,
         MatFormFieldModule,
         MatButtonModule,
         MatInputModule,
         MatIconModule,
-        ReactiveFormsModule], providers: [
+        ReactiveFormsModule],
+  providers: [
         ScreenService,
         provideHttpClient(withInterceptorsFromDi())
     ] })
