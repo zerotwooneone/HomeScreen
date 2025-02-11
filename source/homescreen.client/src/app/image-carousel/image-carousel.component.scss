@@ -7,12 +7,12 @@
 }
 
 .image-wrapper {
+  height: 400px;
   position: relative; /* Needed for absolute positioning of images if using */
   width: 100%;
 }
 
 .image-wrapper img {
-  height: 400px;
   width: 100%;
   display: block; /* Prevents extra space below image */
 }
