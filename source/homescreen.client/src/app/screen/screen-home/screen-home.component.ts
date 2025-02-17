@@ -1,6 +1,7 @@
-import {Component, OnInit, signal} from '@angular/core';
-import {ImageSourceRequest, ScreenHubService, SlideshowRequest} from "../screen-hub.service";
-import {Observable, map } from 'rxjs';
+import {Component, OnInit, Signal, signal, WritableSignal} from '@angular/core';
+import {ImageSourceRequest, ImageUpdateRequest, ScreenHubService, SlideshowRequest} from "../screen-hub.service";
+import {map } from 'rxjs';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'zh-screen-home',
@@ -9,33 +10,25 @@ import {Observable, map } from 'rxjs';
   standalone: false
 })
 export class ScreenHomeComponent implements OnInit {
-  imageSource$: Observable<string>;
+  images:Signal<string[]|undefined>;
   constructor(private readonly _screenHub: ScreenHubService,) {
-    this.imageSource$ = _screenHub.imageUpdate$.pipe(
-      //filter(imageUpdate => imageUpdate.type === 'imageSource'),
-      map(imageUpdate => {
+    this.images = toSignal( _screenHub.imageUpdate$.pipe(
+      map<ImageUpdateRequest, string[]>(imageUpdate => {
         if(imageUpdate.type === 'imageSource') {
-          return (imageUpdate as ImageSourceRequest).source;
+          return [(imageUpdate as ImageSourceRequest).source];
         }else if(imageUpdate.type === 'slideshow') {
-          return (imageUpdate as SlideshowRequest).urls[0];
+          return (imageUpdate as SlideshowRequest).urls;
         }
         console.debug("unknown image update", imageUpdate);
-        return '';
+        return [''];
       })
-    );
+    ));
   }
 
   async ngOnInit() {
     await this._screenHub.connect();
     console.debug('screen hub connected');
   }
-
-  imageUrls = [
-    'https://picsum.photos/id/1/600/400',
-    'https://picsum.photos/id/2/600/400',
-    'https://picsum.photos/id/3/600/400',
-    'https://picsum.photos/id/4/600/400'
-  ];
 
   nextCarousel = signal<object | null>(null);
   previousCarousel = signal<object | null>(null);

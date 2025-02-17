@@ -1,4 +1,4 @@
-﻿import { Component, Input, signal, effect } from '@angular/core';
+﻿import {Component, Input, signal, effect, input} from '@angular/core';
 import { imageCarouselAnimations } from './image-carousel.animations';
 import {CommonModule, NgOptimizedImage} from "@angular/common";
 
@@ -11,7 +11,7 @@ import {CommonModule, NgOptimizedImage} from "@angular/common";
   imports: [NgOptimizedImage, CommonModule],
 })
 export class ImageCarouselComponent {
-  @Input({ required: true }) imageUrls: string[] = [];
+  imageUrls= input.required<string[]>();
 
   @Input() next = signal<object | null>(null);
   @Input() previous = signal<object | null>(null);
@@ -27,9 +27,13 @@ export class ImageCarouselComponent {
 
   constructor() {
     effect(() => {
-      if (this.imageUrls && this.imageUrls.length > 0) {
-        this.currentImageUrl.set(this.imageUrls[this.currentIndex()]);
+
+      if (this.imageUrls() && this.imageUrls().length > 0) {
+        this.currentImageUrl.set(this.imageUrls()[0]);
       }
+      this.currentIndex.set(0);
+      this.next.set(null);
+      this.previous.set(null );
     });
 
     effect(() => {
@@ -50,9 +54,9 @@ export class ImageCarouselComponent {
 
   nextImage(): void {
     if (this.animationInProgress()) return; // Prevent action during animation
-    if (this.imageUrls && this.imageUrls.length > 0) {
+    if (this.imageUrls() && this.imageUrls().length > 0) {
       let nextIndex = this.currentIndex() + 1;
-      if (nextIndex >= this.imageUrls.length) {
+      if (nextIndex >= this.imageUrls().length) {
         nextIndex = 0; // Loop back to the start
       }
       this.currentIndex.set(nextIndex);
@@ -61,10 +65,10 @@ export class ImageCarouselComponent {
 
   previousImage(): void {
     if (this.animationInProgress()) return; // Prevent action during animation
-    if (this.imageUrls && this.imageUrls.length > 0) {
+    if (this.imageUrls() && this.imageUrls().length > 0) {
       let prevIndex = this.currentIndex() - 1;
       if (prevIndex < 0) {
-        prevIndex = this.imageUrls.length - 1; // Loop to the end
+        prevIndex = this.imageUrls().length - 1; // Loop to the end
       }
       this.currentIndex.set(prevIndex);
     }
